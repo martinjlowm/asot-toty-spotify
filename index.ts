@@ -61,8 +61,11 @@ async function extractSongs() {
     });
 }
 
-const dropTerms = (part: string) => part
-  .replace(/( feat. | x | & )/g, ' ')
+const dropTerms = (part: string) => {
+  return part.replace(/([ \(]feat. | x | & | with | pres. | vs |[ \(]ft. | meets | and |, )/gi, ' ')
+    .replace(/’/, "'")
+    .replace(/(\(|\))/g, '');
+}
 
 async function main() {
   let accessToken: string | undefined = process.env.ACCESS_TOKEN;
@@ -99,20 +102,13 @@ async function main() {
   for (const [artist, title, remix] of allSongs.map((song) => song.map(dropTerms))) {
     const { body: { tracks } } = await spotifyApi.search([artist, title, remix].join(' '), ['track']);
 
-    if (!tracks) {
-      console.warn('! Found no tracks for', artist, title);
+    if (!tracks || !tracks.items.length) {
+      console.warn('! Found no tracks for', { artist, title, remix });
 
       continue;
     }
 
-    const { items } = tracks;
-
-    if (!items.length) {
-      console.warn('! Found no tracks for', {artist, title, remix});
-      continue;
-    }
-
-    const [prominentTrack] = items;
+    const [prominentTrack] = tracks.items;
     const [prominentArtist] = prominentTrack.artists;
 
     if (!existingTrackSet.has(prominentTrack.uri)) {
