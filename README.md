@@ -27,5 +27,5 @@ for your user which is used to create and populate said playlist.
 
 ## Other
 
-If you are just here looking for the playlist, you can find it here:
+If you are just looking for the playlist, you can find it here:
 https://open.spotify.com/playlist/37E0Uyy4pOUp5yxglPNq7S?si=4c37605345234d34
