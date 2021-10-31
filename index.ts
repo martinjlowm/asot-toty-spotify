@@ -72,7 +72,9 @@ async function main() {
 
   spotifyApi.setAccessToken(accessToken || await extractAccessToken());
 
-  const desiredPlaylistName = ['ASOT TOTY', '2021'].join(' ');
+  const [year] = new Date().toISOString().split('-');
+
+  const desiredPlaylistName = ['ASOT TOTY', year].join(' ');
 
   const { body: { items: playlists } } = await spotifyApi.getUserPlaylists();
 
