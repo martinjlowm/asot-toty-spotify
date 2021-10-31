@@ -62,8 +62,10 @@ async function extractSongs() {
 }
 
 const dropTerms = (part: string) => {
-  return part.replace(/([ \(]feat. | x | & | with | pres. | vs |[ \(]ft. | meets | and |, )/gi, ' ')
-    .replace(/’/, "'")
+  return part
+    .replace(/ /g, ' ')
+    .replace(/([ \(]feat. | x | & | with | pres. | vs |[ \(]ft. | meets | and |, )/gi, ' ')
+    .replace(/’/g, "'")
     .replace(/(\(|\))/g, '');
 }
 
